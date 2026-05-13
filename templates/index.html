@@ -2,146 +2,137 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Личный дневник</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>мой дневник</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(125deg, #0B1120 0%, #1E2A4A 100%);
-            min-height: 100vh;
+            background: #1a1e2c;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #ddd;
+            padding: 20px;
         }
-        .glass-nav {
-            background: rgba(15, 25, 45, 0.7);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 18px 40px;
+        .top {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid #2d3246;
+            padding-bottom: 12px;
+            margin-bottom: 30px;
         }
         .logo {
-            font-size: 26px;
-            font-weight: 700;
-            background: linear-gradient(125deg, #A5F0FF, #6C8CFF);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .user-section {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .username {
-            color: #E2E8F0;
+            font-size: 22px;
             font-weight: 500;
         }
-        .logout-btn {
-            background: rgba(255,70,85,0.2);
-            border: 1px solid rgba(255,70,85,0.5);
-            color: #FF6B7A;
-            padding: 8px 18px;
-            border-radius: 40px;
+        .userinfo {
+            background: #0f121f;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .logout {
+            background: #2d3246;
+            padding: 6px 14px;
+            border-radius: 20px;
             text-decoration: none;
+            color: #eee;
+            font-size: 13px;
+            margin-left: 12px;
+        }
+        .greet {
+            margin-bottom: 35px;
+        }
+        .greet h1 {
+            font-size: 28px;
             font-weight: 500;
-            transition: all 0.2s;
+            margin-bottom: 6px;
         }
-        .logout-btn:hover {
-            background: rgba(255,70,85,0.4);
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 50px 30px;
-        }
-        .hero {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        .hero h1 {
-            font-size: 56px;
-            font-weight: 800;
-            background: linear-gradient(125deg, #FFFFFF, #A5F0FF);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 15px;
-        }
-        .hero p {
-            color: #94A3B8;
-            font-size: 18px;
+        .greet p {
+            color: #8891b0;
+            font-size: 14px;
         }
         .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
         }
         .card {
-            background: rgba(20, 30, 55, 0.6);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 32px;
-            padding: 32px 24px;
-            text-align: center;
-            transition: all 0.25s ease;
+            background: #0f121f;
+            border: 1px solid #2a2f45;
+            border-radius: 18px;
+            padding: 22px 18px;
+            width: calc(33% - 14px);
             text-decoration: none;
         }
         .card:hover {
-            transform: translateY(-6px);
-            background: rgba(30, 45, 75, 0.7);
-            border-color: rgba(100, 140, 255, 0.4);
-        }
-        .card i {
-            font-size: 48px;
-            margin-bottom: 20px;
+            background: #171c2e;
+            border-color: #4f6bff;
         }
         .card h3 {
-            color: #F1F5F9;
-            font-size: 22px;
-            margin-bottom: 10px;
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #f0f0f0;
         }
         .card p {
-            color: #7F8EA3;
-            font-size: 14px;
+            font-size: 13px;
+            color: #7e88ac;
         }
-        .icon-notes { color: #60A5FA; }
-        .icon-tasks { color: #34D399; }
-        .icon-plans { color: #FBBF24; }
-        .icon-goals { color: #F87171; }
-        .icon-memories { color: #2DD4BF; }
-        @media (max-width: 640px) {
-            .glass-nav { padding: 15px 20px; }
-            .hero h1 { font-size: 36px; }
-            .container { padding: 30px 20px; }
+        .card span {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 12px;
+            color: #5f73c9;
+        }
+        @media (max-width: 760px) {
+            .card { width: calc(50% - 10px); }
+        }
+        @media (max-width: 500px) {
+            .card { width: 100%; }
         }
     </style>
 </head>
 <body>
-    <div class="glass-nav">
-        <div class="logo"><i class="fas fa-feather-alt"></i> Мой дневник</div>
-        <div class="user-section">
-            <span class="username"><i class="fas fa-user-circle"></i> {{ session.name }}</span>
-            <a href="/logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Выйти</a>
-        </div>
+
+<div class="top">
+    <div class="logo">мой дневник</div>
+    <div>
+        <span class="userinfo">{{ session.name }}</span>
+        <a href="/logout" class="logout">выйти</a>
     </div>
-    <div class="container">
-        <div class="hero">
-            <h1>Твоя жизнь — твои записи</h1>
-            <p>Заметки, цели и важные моменты — всё в одном месте</p>
-        </div>
-        <div class="grid">
-            <a href="/notes" class="card"><i class="fas fa-pen-fade icon-notes"></i><h3>Записи</h3><p>Личные мысли и заметки</p></a>
-            <a href="/tasks" class="card"><i class="fas fa-check-double icon-tasks"></i><h3>Дела</h3><p>Список задач на день</p></a>
-            <a href="/plans" class="card"><i class="fas fa-calendar-star icon-plans"></i><h3>Планы</h3><p>Что сделать к дате</p></a>
-            <a href="/goals" class="card"><i class="fas fa-chart-line icon-goals"></i><h3>Копилка</h3><p>Отслеживай финансы</p></a>
-            <a href="/memories" class="card"><i class="fas fa-images icon-memories"></i><h3>Фотоальбом</h3><p>Важные кадры</p></a>
-        </div>
-    </div>
+</div>
+
+<div class="greet">
+    <h1>добро пожаловать, {{ session.name }}</h1>
+    <p>всё важное в одном месте</p>
+</div>
+
+<div class="grid">
+    <a href="/notes" class="card">
+        <h3>мои записи</h3>
+        <p>мысли и заметки</p>
+        <span>→ открыть</span>
+    </a>
+    <a href="/tasks" class="card">
+        <h3>мои дела</h3>
+        <p>что нужно сделать</p>
+        <span>→ открыть</span>
+    </a>
+    <a href="/plans" class="card">
+        <h3>мои планы</h3>
+        <p>что и когда</p>
+        <span>→ открыть</span>
+    </a>
+    <a href="/goals" class="card">
+        <h3>мои накопления</h3>
+        <p>копилка, цели</p>
+        <span>→ открыть</span>
+    </a>
+    <a href="/memories" class="card">
+        <h3>мои воспоминания</h3>
+        <p>фото и важные моменты</p>
+        <span>→ открыть</span>
+    </a>
+</div>
+
 </body>
 </html>
