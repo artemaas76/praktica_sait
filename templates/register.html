@@ -23,6 +23,7 @@
         h2 {
             margin-bottom: 8px;
             font-weight: 500;
+            color: #ddd;
         }
         p {
             color: #6a7290;
@@ -37,6 +38,7 @@
             padding: 12px 16px;
             margin-bottom: 16px;
             color: #ddd;
+            font-size: 14px;
         }
         button {
             width: 100%;
@@ -45,12 +47,19 @@
             padding: 12px;
             border-radius: 30px;
             color: white;
+            font-size: 15px;
             cursor: pointer;
+        }
+        button:hover {
+            background: #3d435c;
         }
         a {
             color: #7e88ac;
             text-decoration: none;
             font-size: 13px;
+        }
+        a:hover {
+            color: #a5b0d0;
         }
         .flash {
             background: #2d3246;
@@ -58,6 +67,11 @@
             border-radius: 16px;
             margin-bottom: 16px;
             font-size: 13px;
+            color: #f0a0a0;
+        }
+        .text-center {
+            text-align: center;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -71,12 +85,12 @@
         {% endfor %}
     {% endwith %}
     <form method="POST">
-        <input type="text" name="username" placeholder="логин" required>
+        <input type="text" name="username" placeholder="логин" required autocomplete="off">
         <input type="text" name="name" placeholder="твоё имя" required>
         <input type="password" name="password" placeholder="пароль" required>
         <button type="submit">зарегистрироваться</button>
     </form>
-    <div style="text-align:center; margin-top: 20px;"><a href="/login">уже есть аккаунт? войти</a></div>
+    <div class="text-center"><a href="/login">уже есть аккаунт? войти</a></div>
 </div>
 </body>
 </html>
