@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход | Дневник</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 32px;
+            width: 420px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+        }
+        h2 { font-size: 28px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+        .sub { color: #64748b; font-size: 14px; margin-bottom: 32px; }
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: 15px;
+            transition: all 0.2s;
+            margin-bottom: 16px;
+        }
+        input:focus { outline: none; border-color: #1e3a8a; box-shadow: 0 0 0 3px rgba(30,58,138,0.1); }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        button:hover { background: #0f172a; transform: translateY(-2px); }
+        a { color: #1e3a8a; text-decoration: none; font-size: 14px; font-weight: 500; }
+        .text-center { text-align: center; margin-top: 24px; }
+        .alert { padding: 12px; border-radius: 12px; margin-bottom: 20px; font-size: 14px; }
+        .alert-success { background: #dcfce7; color: #166534; }
+        .alert-danger { background: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Дневник</h2>
+        <div class="sub">Войдите в свой аккаунт</div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form method="POST">
+            <input type="text" name="username" placeholder="Логин" required>
+            <input type="password" name="password" placeholder="Пароль" required>
+            <button type="submit">Войти</button>
+        </form>
+        <div class="text-center"><a href="/register">Нет аккаунта? Зарегистрироваться</a></div>
+    </div>
+</body>
+</html>
