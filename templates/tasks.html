@@ -25,7 +25,16 @@
         .task-check { text-decoration: none; font-size: 26px; }
         .task-done { text-decoration: line-through; color: #94A3B8; }
         .task-title { color: #F1F5F9; font-weight: 500; font-size: 16px; }
-        .delete-task { background: rgba(248,113,113,0.15); border: none; color: #F87171; padding: 6px 14px; border-radius: 30px; cursor: pointer; transition: 0.2s; }
+        .delete-task {
+            background: rgba(248,113,113,0.15);
+            color: #F87171;
+            padding: 6px 14px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.2s;
+            display: inline-block;
+        }
         .delete-task:hover { background: rgba(248,113,113,0.3); }
         .empty-state { text-align: center; padding: 60px 20px; background: rgba(20,30,55,0.4); border-radius: 32px; color: #64748B; }
     </style>
@@ -45,15 +54,20 @@
         {% for task in tasks %}
         <div class="task-card">
             <div class="task-left">
-                <a href="/toggle_task/{{ task[0] }}" class="task-check">{% if task[3] %}✅{% else %}⬜{% endif %}</a>
+                <a href="/toggle_task/{{ task[0] }}" class="task-check">
+                    {% if task[3] %}✅{% else %}⬜{% endif %}
+                </a>
                 <span class="task-title {% if task[3] %}task-done{% endif %}">{{ task[2] }}</span>
             </div>
-            <form method="POST" action="/delete_task/{{ task[0] }}" style="display: inline;" onsubmit="return confirm('Удалить дело?')">
-                <button type="submit" class="delete-task"><i class="fas fa-trash"></i></button>
-            </form>
+            <a href="/delete_task/{{ task[0] }}" class="delete-task" onclick="return confirm('Удалить дело?')">
+                🗑️
+            </a>
         </div>
         {% else %}
-        <div class="empty-state"><i class="fas fa-check-circle" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>Нет дел, отдыхай</div>
+        <div class="empty-state">
+            <i class="fas fa-check-circle" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>
+            Нет дел, отдыхай
+        </div>
         {% endfor %}
     </div>
 </body>
