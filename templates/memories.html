@@ -1,59 +1,6 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Воспоминания | Дневник</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: #f8fafc; }
-        .navbar { background: white; border-bottom: 1px solid #e2e8f0; padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 20px; font-weight: 700; color: #1e3a8a; }
-        .back-btn { background: #f1f5f9; color: #1e293b; padding: 8px 16px; border-radius: 12px; text-decoration: none; }
-        .container { max-width: 800px; margin: 0 auto; padding: 40px 24px; }
-        h1 { font-size: 32px; font-weight: 700; color: #0f172a; }
-        .sub { color: #64748b; margin-bottom: 32px; }
-        .form-card { background: white; border-radius: 24px; padding: 24px; border: 1px solid #e2e8f0; margin-bottom: 32px; }
-        input, textarea { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 16px; margin-bottom: 12px; }
-        button { background: #1e3a8a; color: white; border: none; padding: 14px; border-radius: 16px; font-weight: 600; cursor: pointer; width: 100%; }
-        .memory-card { background: white; border-radius: 20px; border: 1px solid #e2e8f0; margin-bottom: 24px; overflow: hidden; }
-        .memory-content { padding: 20px; }
-        .memory-header { display: flex; justify-content: space-between; margin-bottom: 12px; }
-        .memory-title { font-size: 20px; font-weight: 700; color: #0f172a; }
-        .memory-date { font-size: 12px; color: #94a3b8; margin-bottom: 12px; }
-        .delete-memory { background: #fee2e2; color: #ef4444; padding: 6px 12px; border-radius: 10px; text-decoration: none; font-size: 13px; }
-    </style>
-</head>
-<body>
-    <div class="navbar">
-        <div class="logo"><i class="fas fa-book-open"></i> Мой дневник</div>
-        <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> На главную</a>
-    </div>
-    <div class="container">
-        <h1>Воспоминания</h1>
-        <div class="sub">Самые важные моменты</div>
-        <div class="form-card">
-            <form method="POST" action="/add_memory" enctype="multipart/form-data">
-                <input type="text" name="title" placeholder="Название" required>
-                <textarea name="content" rows="4" placeholder="Твои воспоминания..."></textarea>
-                <button type="submit"><i class="fas fa-save"></i> Сохранить воспоминание</button>
-            </form>
-        </div>
-        {% for memory in memories %}
-        <div class="memory-card">
-            <div class="memory-content">
-                <div class="memory-header">
-                    <span class="memory-title">{{ memory[2] }}</span>
-                    <a href="/delete_memory/{{ memory[0] }}" class="delete-memory" onclick="return confirm('Удалить?')"><i class="fas fa-trash"></i> Удалить</a>
-                </div>
-                <div class="memory-date"><i class="far fa-calendar-alt"></i> {{ memory[5] }}</div>
-                <div>{{ memory[3] }}</div>
-            </div>
-        </div>
-        {% else %}
-        <div style="text-align: center; padding: 60px; background: white; border-radius: 24px;">Нет воспоминаний</div>
-        {% endfor %}
-    </div>
-</body>
-</html>
+<form method="POST" action="/add_memory" enctype="multipart/form-data">
+    <input type="text" name="title" placeholder="Название" required>
+    <textarea name="content" rows="4" placeholder="Твои воспоминания..."></textarea>
+    <input type="file" name="image" accept="image/*">
+    <button type="submit">Сохранить</button>
+</form>
