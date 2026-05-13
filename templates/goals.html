@@ -2,53 +2,49 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Цели | Дневник</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Копилка</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: #f8fafc; }
-        .navbar { background: white; border-bottom: 1px solid #e2e8f0; padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 20px; font-weight: 700; color: #1e3a8a; }
-        .back-btn { background: #f1f5f9; color: #1e293b; padding: 8px 16px; border-radius: 12px; text-decoration: none; }
-        .container { max-width: 700px; margin: 0 auto; padding: 40px 24px; }
-        h1 { font-size: 32px; font-weight: 700; color: #0f172a; }
-        .sub { color: #64748b; margin-bottom: 32px; }
-        .form-card { background: white; border-radius: 24px; padding: 24px; border: 1px solid #e2e8f0; margin-bottom: 32px; }
-        input { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 16px; margin-bottom: 12px; }
-        button { background: #1e3a8a; color: white; border: none; padding: 14px; border-radius: 16px; font-weight: 600; cursor: pointer; width: 100%; }
-        .goal-card { background: white; border-radius: 20px; padding: 24px; border: 1px solid #e2e8f0; margin-bottom: 20px; }
-        .goal-header { display: flex; justify-content: space-between; margin-bottom: 16px; }
-        .goal-title { font-size: 20px; font-weight: 700; color: #0f172a; }
-        .delete-goal { background: #fee2e2; color: #ef4444; padding: 6px 12px; border-radius: 10px; text-decoration: none; font-size: 13px; }
-        .progress-bar { background: #e2e8f0; border-radius: 20px; height: 12px; overflow: hidden; margin: 16px 0; }
-        .progress-fill { background: #1e3a8a; height: 100%; border-radius: 20px; }
-        .goal-stats { display: flex; justify-content: space-between; font-size: 14px; color: #64748b; margin-bottom: 16px; }
-        .add-form { display: flex; gap: 12px; margin-top: 16px; }
-        .add-form input { flex: 1; margin-bottom: 0; }
-        .add-form button { width: auto; padding: 12px 20px; }
+        body { background: #0F172A; }
+        .top-bar { background: rgba(15,25,45,0.8); backdrop-filter: blur(10px); padding: 16px 30px; display: flex; justify-content: space-between; border-bottom: 1px solid #1E2A4A; }
+        .logo { color: #A5F0FF; font-weight: 700; }
+        .back-btn { color: #CBD5E1; text-decoration: none; background: #1E293B; padding: 8px 18px; border-radius: 40px; }
+        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        .form-card { background: #1E293B; border-radius: 28px; padding: 24px; margin-bottom: 32px; }
+        .form-card input { width: 100%; background: #0F172A; border: 1px solid #334155; border-radius: 40px; padding: 12px 18px; margin-bottom: 12px; color: white; }
+        .form-card button { background: #3B5DFF; border: none; border-radius: 40px; padding: 12px; width: 100%; color: white; font-weight: 600; cursor: pointer; }
+        .goal-card { background: #1E293B; border-radius: 24px; padding: 20px; margin-bottom: 20px; border: 1px solid #2D3A5E; }
+        .goal-header { display: flex; justify-content: space-between; margin-bottom: 12px; }
+        .goal-title { font-weight: 700; color: #F1F5F9; font-size: 18px; }
+        .progress-bar { background: #0F172A; border-radius: 20px; height: 12px; overflow: hidden; margin: 12px 0; }
+        .progress-fill { background: #34D399; width: 0%; height: 100%; }
+        .goal-stats { color: #94A3B8; font-size: 13px; margin-bottom: 12px; display: flex; justify-content: space-between; }
+        .add-form { display: flex; gap: 8px; margin-top: 12px; }
+        .add-form input { flex: 1; background: #0F172A; border: 1px solid #334155; border-radius: 40px; padding: 10px 14px; color: white; }
+        .add-form button { background: #10B981; width: auto; padding: 10px 18px; }
+        .delete-link { color: #F87171; text-decoration: none; background: none; }
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo"><i class="fas fa-book-open"></i> Мой дневник</div>
+    <div class="top-bar">
+        <div class="logo"><i class="fas fa-coins"></i> Копилка</div>
         <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> На главную</a>
     </div>
     <div class="container">
-        <h1>Цели и копилки</h1>
-        <div class="sub">Копи на мечту</div>
         <div class="form-card">
             <form method="POST" action="/add_goal">
-                <input type="text" name="title" placeholder="Название цели" required>
+                <input type="text" name="title" placeholder="На что копим?" required>
                 <input type="number" name="target_amount" placeholder="Сумма цели" step="0.01" required>
-                <button type="submit"><i class="fas fa-bullseye"></i> Создать цель</button>
+                <button type="submit">🎯 Поставить цель</button>
             </form>
         </div>
         {% for goal in goals %}
         <div class="goal-card">
             <div class="goal-header">
                 <span class="goal-title">{{ goal[2] }}</span>
-                <a href="/delete_goal/{{ goal[0] }}" class="delete-goal" onclick="return confirm('Удалить?')"><i class="fas fa-trash"></i> Удалить</a>
+                <a href="/delete_goal/{{ goal[0] }}" class="delete-link" onclick="return confirm('Удалить цель?')">🗑️</a>
             </div>
             <div class="goal-stats">
                 <span>Накоплено: {{ "%.2f"|format(goal[4]) }} ₽</span>
@@ -57,12 +53,12 @@
             </div>
             <div class="progress-bar"><div class="progress-fill" style="width: {{ (goal[4]/goal[3]*100) if goal[3] > 0 else 0 }}%"></div></div>
             <form method="POST" action="/add_to_goal/{{ goal[0] }}" class="add-form">
-                <input type="number" name="amount" placeholder="Сумма пополнения" step="0.01" required>
-                <button type="submit"><i class="fas fa-plus"></i> Пополнить</button>
+                <input type="number" name="amount" placeholder="Сумма" step="0.01" required>
+                <button type="submit">+ Пополнить</button>
             </form>
         </div>
         {% else %}
-        <div style="text-align: center; padding: 60px; background: white; border-radius: 24px;">Нет целей</div>
+        <div style="text-align:center; color:#64748B; padding:40px;">Нет целей, добавь первую 💰</div>
         {% endfor %}
     </div>
 </body>
