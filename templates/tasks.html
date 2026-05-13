@@ -2,73 +2,45 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Дела</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>мои дела</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: linear-gradient(125deg, #0B1120 0%, #1E2A4A 100%); min-height: 100vh; }
-        .glass-nav { background: rgba(15, 25, 45, 0.7); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 26px; font-weight: 700; background: linear-gradient(125deg, #A5F0FF, #6C8CFF); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .back-btn { background: rgba(100,140,255,0.15); border: 1px solid rgba(100,140,255,0.3); color: #A5F0FF; padding: 8px 18px; border-radius: 40px; text-decoration: none; font-weight: 500; transition: all 0.2s; }
-        .back-btn:hover { background: rgba(100,140,255,0.3); }
-        .container { max-width: 800px; margin: 40px auto; padding: 0 25px; }
-        .form-card { background: rgba(20, 30, 55, 0.6); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.08); border-radius: 32px; padding: 28px; margin-bottom: 32px; }
-        .input-group { display: flex; gap: 12px; }
-        .input-group input { flex: 1; background: #0F172A; border: 1px solid #334155; border-radius: 40px; padding: 14px 18px; color: #F1F5F9; font-size: 14px; }
-        .input-group input:focus { outline: none; border-color: #6C8CFF; }
-        button { background: linear-gradient(95deg, #3B5DFF, #6C8CFF); border: none; padding: 12px 24px; border-radius: 40px; color: white; font-weight: 600; cursor: pointer; transition: 0.2s; }
-        button:hover { transform: translateY(-2px); }
-        .task-card { background: rgba(20, 30, 55, 0.5); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 18px 22px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; transition: all 0.2s; }
-        .task-card:hover { border-color: rgba(100,140,255,0.3); background: rgba(30, 45, 75, 0.6); }
-        .task-left { display: flex; align-items: center; gap: 15px; }
-        .task-check { text-decoration: none; font-size: 26px; }
-        .task-done { text-decoration: line-through; color: #94A3B8; }
-        .task-title { color: #F1F5F9; font-weight: 500; font-size: 16px; }
-        .delete-task {
-            background: rgba(248,113,113,0.15);
-            color: #F87171;
-            padding: 6px 14px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-size: 14px;
-            transition: 0.2s;
-            display: inline-block;
-        }
-        .delete-task:hover { background: rgba(248,113,113,0.3); }
-        .empty-state { text-align: center; padding: 60px 20px; background: rgba(20,30,55,0.4); border-radius: 32px; color: #64748B; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #1a1e2c; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #ddd; padding: 20px; }
+        .top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2d3246; padding-bottom: 12px; margin-bottom: 25px; }
+        .back { background: #2d3246; padding: 6px 14px; border-radius: 20px; text-decoration: none; color: #eee; font-size: 13px; }
+        .form-card { background: #0f121f; border: 1px solid #2a2f45; border-radius: 18px; padding: 20px; margin-bottom: 25px; display: flex; gap: 10px; }
+        .form-card input { flex: 1; background: #11151f; border: 1px solid #2d3246; border-radius: 30px; padding: 10px 15px; color: #ddd; }
+        button { background: #2d3246; border: none; padding: 8px 20px; border-radius: 30px; color: white; cursor: pointer; }
+        .task { background: #0f121f; border: 1px solid #2a2f45; border-radius: 16px; padding: 14px 18px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .task-left { display: flex; gap: 12px; align-items: center; }
+        .task-check { text-decoration: none; font-size: 22px; }
+        .done { text-decoration: line-through; color: #7e88ac; }
+        .del-task { color: #c97a7a; text-decoration: none; font-size: 14px; }
     </style>
 </head>
 <body>
-    <div class="glass-nav">
-        <div class="logo"><i class="fas fa-list-check"></i> Дела</div>
-        <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> На главную</a>
+<div class="top">
+    <div style="font-size: 20px;">мои дела</div>
+    <a href="/" class="back">на главную</a>
+</div>
+
+<div class="form-card">
+    <form method="POST" action="/add_task" style="display: flex; gap: 10px; width: 100%;">
+        <input type="text" name="title" placeholder="что нужно сделать?">
+        <button type="submit">добавить</button>
+    </form>
+</div>
+
+{% for task in tasks %}
+<div class="task">
+    <div class="task-left">
+        <a href="/toggle_task/{{ task[0] }}" class="task-check">{% if task[3] %}✅{% else %}⬜{% endif %}</a>
+        <span class="{% if task[3] %}done{% endif %}">{{ task[2] }}</span>
     </div>
-    <div class="container">
-        <div class="form-card">
-            <form method="POST" action="/add_task" class="input-group">
-                <input type="text" name="title" placeholder="Что нужно сделать?" required>
-                <button type="submit">+ Добавить</button>
-            </form>
-        </div>
-        {% for task in tasks %}
-        <div class="task-card">
-            <div class="task-left">
-                <a href="/toggle_task/{{ task[0] }}" class="task-check">
-                    {% if task[3] %}✅{% else %}⬜{% endif %}
-                </a>
-                <span class="task-title {% if task[3] %}task-done{% endif %}">{{ task[2] }}</span>
-            </div>
-            <a href="/delete_task/{{ task[0] }}" class="delete-task" onclick="return confirm('Удалить дело?')">
-                🗑️
-            </a>
-        </div>
-        {% else %}
-        <div class="empty-state">
-            <i class="fas fa-check-circle" style="font-size: 48px; margin-bottom: 16px; display: block;"></i>
-            Нет дел, отдыхай
-        </div>
-        {% endfor %}
-    </div>
+    <a href="/delete_task/{{ task[0] }}" class="del-task" onclick="return confirm('удалить дело?')">🗑️ удалить</a>
+</div>
+{% else %}
+<div style="text-align:center; color:#6a7290; padding:30px;">дел нет, можно отдохнуть</div>
+{% endfor %}
 </body>
 </html>
