@@ -1,6 +1,55 @@
-<form method="POST" action="/add_memory" enctype="multipart/form-data">
-    <input type="text" name="title" placeholder="Название" required>
-    <textarea name="content" rows="4" placeholder="Твои воспоминания..."></textarea>
-    <input type="file" name="image" accept="image/*">
-    <button type="submit">Сохранить</button>
-</form>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Фотоальбом</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: #0F172A; }
+        .top-bar { background: rgba(15,25,45,0.8); backdrop-filter: blur(10px); padding: 16px 30px; display: flex; justify-content: space-between; border-bottom: 1px solid #1E2A4A; }
+        .logo { color: #A5F0FF; font-weight: 700; }
+        .back-btn { color: #CBD5E1; text-decoration: none; background: #1E293B; padding: 8px 18px; border-radius: 40px; }
+        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        .form-card { background: #1E293B; border-radius: 28px; padding: 24px; margin-bottom: 32px; }
+        .form-card input, .form-card textarea { width: 100%; background: #0F172A; border: 1px solid #334155; border-radius: 20px; padding: 12px 18px; margin-bottom: 12px; color: white; }
+        .form-card button { background: #3B5DFF; border: none; border-radius: 40px; padding: 12px; width: 100%; color: white; font-weight: 600; cursor: pointer; }
+        .memory-card { background: #1E293B; border-radius: 24px; margin-bottom: 24px; overflow: hidden; border: 1px solid #2D3A5E; }
+        .memory-card img { width: 100%; max-height: 300px; object-fit: cover; }
+        .memory-content { padding: 20px; }
+        .memory-title { font-weight: 700; color: #F1F5F9; font-size: 18px; margin-bottom: 8px; }
+        .memory-date { font-size: 11px; color: #6C8CFF; margin-bottom: 12px; }
+        .delete-link { color: #F87171; text-decoration: none; float: right; }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="logo"><i class="fas fa-images"></i> Альбом</div>
+        <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> На главную</a>
+    </div>
+    <div class="container">
+        <div class="form-card">
+            <form method="POST" action="/add_memory" enctype="multipart/form-data">
+                <input type="text" name="title" placeholder="Название" required>
+                <textarea rows="4" name="content" placeholder="Что вспомнилось?"></textarea>
+                <input type="file" name="image" accept="image/*">
+                <button type="submit"><i class="fas fa-save"></i> Сохранить в альбом</button>
+            </form>
+        </div>
+        {% for memory in memories %}
+        <div class="memory-card">
+            <a href="/delete_memory/{{ memory[0] }}" class="delete-link" onclick="return confirm('Удалить воспоминание?')">🗑️</a>
+            {% if memory[4] %}<img src="/static/uploads/{{ memory[4] }}">{% endif %}
+            <div class="memory-content">
+                <div class="memory-title">{{ memory[2] }}</div>
+                <div class="memory-date">{{ memory[5] }}</div>
+                <div style="color:#CBD5E1;">{{ memory[3] }}</div>
+            </div>
+        </div>
+        {% else %}
+        <div style="text-align:center; color:#64748B; padding:40px;">Нет воспоминаний, загрузи первое фото 📸</div>
+        {% endfor %}
+    </div>
+</body>
+</html>
