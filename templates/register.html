@@ -2,66 +2,100 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Регистрация | Дневник</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Регистрация — Дневник</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body {
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            background: linear-gradient(125deg, #0B1120 0%, #1E2A4A 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .card {
-            background: white;
-            padding: 40px;
-            border-radius: 32px;
-            width: 420px;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+        .glass-card {
+            background: rgba(20, 30, 55, 0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 40px;
+            padding: 42px 38px;
+            width: 440px;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.3);
         }
-        h2 { font-size: 28px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
-        .sub { color: #64748b; font-size: 14px; margin-bottom: 32px; }
+        h2 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(125deg, #FFFFFF, #A5F0FF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+        }
+        .sub {
+            color: #94A3B8;
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
         input {
             width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 16px;
-            font-size: 15px;
+            padding: 14px 18px;
+            background: #0F172A;
+            border: 1px solid #334155;
+            border-radius: 28px;
+            font-size: 14px;
+            color: #F1F5F9;
             margin-bottom: 16px;
+            transition: all 0.2s;
         }
-        input:focus { outline: none; border-color: #1e3a8a; }
+        input:focus {
+            outline: none;
+            border-color: #6C8CFF;
+            box-shadow: 0 0 0 3px rgba(108,140,255,0.2);
+        }
         button {
             width: 100%;
             padding: 14px;
-            background: #1e3a8a;
-            color: white;
+            background: linear-gradient(95deg, #3B5DFF, #6C8CFF);
             border: none;
-            border-radius: 16px;
+            border-radius: 40px;
             font-weight: 600;
+            font-size: 16px;
+            color: white;
             cursor: pointer;
+            transition: 0.2s;
         }
-        button:hover { background: #0f172a; }
-        a { color: #1e3a8a; text-decoration: none; }
+        button:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(95deg, #2F4AD8, #5B77E8);
+        }
+        a {
+            color: #A5F0FF;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        a:hover { text-decoration: underline; }
         .text-center { text-align: center; margin-top: 24px; }
-        .alert { padding: 12px; border-radius: 12px; margin-bottom: 20px; }
-        .alert-danger { background: #fee2e2; color: #991b1b; }
+        .flash {
+            padding: 12px;
+            border-radius: 24px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+        .flash-error { background: rgba(248,113,113,0.15); border: 1px solid #F87171; color: #FECACA; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h2>Регистрация</h2>
-        <div class="sub">Создайте новый аккаунт</div>
+    <div class="glass-card">
+        <h2>Создать аккаунт</h2>
+        <div class="sub">Заполни поля, это быстро</div>
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-danger">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
+            {% for cat, msg in messages %}
+                <div class="flash flash-{{ cat }}">{{ msg }}</div>
+            {% endfor %}
         {% endwith %}
         <form method="POST">
-            <input type="text" name="username" placeholder="Логин" required>
-            <input type="text" name="name" placeholder="Ваше имя" required>
+            <input type="text" name="username" placeholder="Логин" autocomplete="off" required>
+            <input type="text" name="name" placeholder="Имя" required>
             <input type="password" name="password" placeholder="Пароль" required>
             <button type="submit">Зарегистрироваться</button>
         </form>
