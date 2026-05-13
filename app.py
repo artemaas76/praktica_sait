@@ -3,9 +3,12 @@ import sqlite3
 import hashlib
 import os
 from datetime import datetime
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.secret_key = 'secretkey123'
+app.secret_key = 'supersecretkey2025'
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
@@ -83,10 +86,10 @@ def register():
             session['user_id'] = user_id
             session['username'] = username
             session['name'] = name
-            flash('Регистрация успешна!', 'success')
+            flash('Регистрация прошла успешно!', 'success')
             return redirect(url_for('index'))
         except sqlite3.IntegrityError:
-            flash('Имя пользователя уже занято!', 'error')
+            flash('Это имя уже кто-то занял, придумай другое', 'error')
             return render_template('register.html')
     return render_template('register.html')
 
@@ -104,17 +107,17 @@ def login():
             session['user_id'] = user[0]
             session['username'] = username
             session['name'] = user[1]
-            flash(f'Добро пожаловать, {user[1]}!', 'success')
+            flash(f'С возвращением, {user[1]}!', 'success')
             return redirect(url_for('index'))
         else:
-            flash('Неверный логин или пароль!', 'error')
+            flash('Неверный логин или пароль, попробуй ещё', 'error')
             return render_template('login.html')
     return render_template('login.html')
 
 @app.route('/logout')
 def logout():
     session.clear()
-    flash('Вы вышли из системы', 'info')
+    flash('Ты вышел из системы', 'info')
     return redirect(url_for('login'))
 
 @app.route('/')
@@ -293,7 +296,15 @@ def add_memory():
     title = request.form['title']
     content = request.form['content']
     user_id = session['user_id']
+    
     image = None
+    if 'image' in request.files:
+        file = request.files['image']
+        if file and file.filename:
+            filename = secure_filename(f"{datetime.now().timestamp()}_{file.filename}")
+            file.save(os.path.join('static/uploads', filename))
+            image = filename
+    
     conn = sqlite3.connect('diary.db')
     c = conn.cursor()
     c.execute("INSERT INTO memories (user_id, title, content, image, created_at) VALUES (?,?,?,?,?)",
