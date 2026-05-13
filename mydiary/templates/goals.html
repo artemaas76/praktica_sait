@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Цели | Дневник</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: #f8fafc; }
+        .navbar { background: white; border-bottom: 1px solid #e2e8f0; padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 20px; font-weight: 700; color: #1e3a8a; }
+        .back-btn { background: #f1f5f9; color: #1e293b; padding: 8px 16px; border-radius: 12px; text-decoration: none; }
+        .container { max-width: 700px; margin: 0 auto; padding: 40px 24px; }
+        h1 { font-size: 32px; font-weight: 700; color: #0f172a; }
+        .sub { color: #64748b; margin-bottom: 32px; }
+        .form-card { background: white; border-radius: 24px; padding: 24px; border: 1px solid #e2e8f0; margin-bottom: 32px; }
+        input { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 16px; margin-bottom: 12px; }
+        button { background: #1e3a8a; color: white; border: none; padding: 14px; border-radius: 16px; font-weight: 600; cursor: pointer; width: 100%; }
+        .goal-card { background: white; border-radius: 20px; padding: 24px; border: 1px solid #e2e8f0; margin-bottom: 20px; }
+        .goal-header { display: flex; justify-content: space-between; margin-bottom: 16px; }
+        .goal-title { font-size: 20px; font-weight: 700; color: #0f172a; }
+        .delete-goal { background: #fee2e2; color: #ef4444; padding: 6px 12px; border-radius: 10px; text-decoration: none; font-size: 13px; }
+        .progress-bar { background: #e2e8f0; border-radius: 20px; height: 12px; overflow: hidden; margin: 16px 0; }
+        .progress-fill { background: #1e3a8a; height: 100%; border-radius: 20px; }
+        .goal-stats { display: flex; justify-content: space-between; font-size: 14px; color: #64748b; margin-bottom: 16px; }
+        .add-form { display: flex; gap: 12px; margin-top: 16px; }
+        .add-form input { flex: 1; margin-bottom: 0; }
+        .add-form button { width: auto; padding: 12px 20px; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo"><i class="fas fa-book-open"></i> Мой дневник</div>
+        <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> На главную</a>
+    </div>
+    <div class="container">
+        <h1>Цели и копилки</h1>
+        <div class="sub">Копи на мечту</div>
+        <div class="form-card">
+            <form method="POST" action="/add_goal">
+                <input type="text" name="title" placeholder="Название цели" required>
+                <input type="number" name="target_amount" placeholder="Сумма цели" step="0.01" required>
+                <button type="submit"><i class="fas fa-bullseye"></i> Создать цель</button>
+            </form>
+        </div>
+        {% for goal in goals %}
+        <div class="goal-card">
+            <div class="goal-header">
+                <span class="goal-title">{{ goal[2] }}</span>
+                <a href="/delete_goal/{{ goal[0] }}" class="delete-goal" onclick="return confirm('Удалить?')"><i class="fas fa-trash"></i> Удалить</a>
+            </div>
+            <div class="goal-stats">
+                <span>Накоплено: {{ "%.2f"|format(goal[4]) }} ₽</span>
+                <span>Цель: {{ "%.2f"|format(goal[3]) }} ₽</span>
+                <span>{{ "%.0f"|format((goal[4]/goal[3]*100) if goal[3] > 0 else 0) }}%</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width: {{ (goal[4]/goal[3]*100) if goal[3] > 0 else 0 }}%"></div></div>
+            <form method="POST" action="/add_to_goal/{{ goal[0] }}" class="add-form">
+                <input type="number" name="amount" placeholder="Сумма пополнения" step="0.01" required>
+                <button type="submit"><i class="fas fa-plus"></i> Пополнить</button>
+            </form>
+        </div>
+        {% else %}
+        <div style="text-align: center; padding: 60px; background: white; border-radius: 24px;">Нет целей</div>
+        {% endfor %}
+    </div>
+</body>
+</html>

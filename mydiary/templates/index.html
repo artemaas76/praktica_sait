@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Дневник</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: #f8fafc; }
+        .navbar {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #0f172a, #1e3a8a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .user-info { display: flex; align-items: center; gap: 16px; }
+        .logout-btn { background: #ef4444; color: white; padding: 8px 16px; border-radius: 12px; text-decoration: none; font-size: 14px; font-weight: 500; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+        .welcome { text-align: center; margin-bottom: 48px; }
+        .welcome h1 { font-size: 48px; font-weight: 800; color: #0f172a; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; }
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 32px 24px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 1px solid #e2e8f0;
+        }
+        .card:hover { transform: translateY(-8px); border-color: #1e3a8a; }
+        .card i { font-size: 48px; margin-bottom: 16px; }
+        .card h3 { font-size: 20px; font-weight: 700; color: #0f172a; }
+        .card p { font-size: 14px; color: #64748b; }
+        .icon-notes { color: #1e3a8a; }
+        .icon-tasks { color: #10b981; }
+        .icon-plans { color: #f59e0b; }
+        .icon-goals { color: #ef4444; }
+        .icon-memories { color: #06b6d4; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo"><i class="fas fa-book-open"></i> Мой дневник</div>
+        <div class="user-info">
+            <span>{{ session.name }}</span>
+            <a href="/logout" class="logout-btn">Выйти</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="welcome">
+            <h1>Твой личный дневник</h1>
+        </div>
+        <div class="grid">
+            <a href="/notes" class="card"><i class="fas fa-pen icon-notes"></i><h3>Записи</h3><p>Дневниковые записи</p></a>
+            <a href="/tasks" class="card"><i class="fas fa-check-circle icon-tasks"></i><h3>Дела</h3><p>Список задач</p></a>
+            <a href="/plans" class="card"><i class="fas fa-calendar-day icon-plans"></i><h3>Планы</h3><p>Планы на дату</p></a>
+            <a href="/goals" class="card"><i class="fas fa-bullseye icon-goals"></i><h3>Цели</h3><p>Копилки и цели</p></a>
+            <a href="/memories" class="card"><i class="fas fa-images icon-memories"></i><h3>Воспоминания</h3><p>Фото и важные моменты</p></a>
+        </div>
+    </div>
+</body>
+</html>
