@@ -2,45 +2,45 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>мои планы</title>
+    <meta name=viewport content="width=device-width, initial-scale=1.0">
+    <title>планы</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #1a1e2c; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #ddd; padding: 20px; }
-        .top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2d3246; padding-bottom: 12px; margin-bottom: 25px; }
-        .back { background: #2d3246; padding: 6px 14px; border-radius: 20px; text-decoration: none; color: #eee; font-size: 13px; }
-        .form-card { background: #0f121f; border: 1px solid #2a2f45; border-radius: 18px; padding: 20px; margin-bottom: 25px; }
-        input { width: 100%; background: #11151f; border: 1px solid #2d3246; border-radius: 30px; padding: 10px 15px; margin-bottom: 12px; color: #ddd; }
-        button { background: #2d3246; border: none; padding: 8px 20px; border-radius: 30px; color: white; width: 100%; cursor: pointer; }
-        .plan { background: #0f121f; border: 1px solid #2a2f45; border-radius: 16px; padding: 14px 18px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .plan h4 { margin-bottom: 4px; }
-        .plan-date { font-size: 11px; color: #6a7290; }
-        .del-plan { color: #c97a7a; text-decoration: none; font-size: 13px; }
+        body { background: #0f172a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #e2e8f0; padding: 2rem 1.5rem; }
+        .top { max-width: 700px; margin: 0 auto 2rem auto; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 1rem; }
+        .back { background: #1e293b; border: 1px solid #334155; padding: 0.4rem 1.2rem; border-radius: 2rem; text-decoration: none; color: #e2e8f0; font-size: 0.8rem; }
+        .container { max-width: 700px; margin: 0 auto; }
+        .form-card { background: #1e293b; border: 1px solid #334155; border-radius: 1rem; padding: 1rem; margin-bottom: 1.5rem; }
+        input { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 2rem; padding: 0.6rem 1rem; margin-bottom: 0.5rem; color: #e2e8f0; }
+        button { background: #334155; border: none; padding: 0.5rem 1.2rem; border-radius: 2rem; color: white; cursor: pointer; width: 100%; }
+        .plan { background: #1e293b; border: 1px solid #334155; border-radius: 0.8rem; padding: 0.8rem 1rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
+        .plan h4 { font-size: 0.9rem; margin-bottom: 0.2rem; }
+        .plan-date { font-size: 0.65rem; color: #94a3b8; }
+        .del-plan { color: #f87171; text-decoration: none; font-size: 0.8rem; }
+        .empty { text-align: center; color: #94a3b8; padding: 2rem; }
     </style>
 </head>
 <body>
 <div class="top">
-    <div style="font-size: 20px;">мои планы</div>
-    <a href="/" class="back">на главную</a>
+    <div style="font-size: 1.2rem;">📅 планы</div>
+    <a href="/" class="back">← назад</a>
 </div>
-
-<div class="form-card">
-    <form method="POST" action="/add_plan">
-        <input type="text" name="title" placeholder="что запланировал?" required>
-        <input type="date" name="plan_date" required>
-        <button type="submit">добавить план</button>
-    </form>
-</div>
-
-{% for plan in plans %}
-<div class="plan">
-    <div>
-        <h4>{{ plan[2] }}</h4>
-        <div class="plan-date">{{ plan[3] }}</div>
+<div class="container">
+    <div class="form-card">
+        <form method="POST" action="/add_plan">
+            <input type="text" name="title" placeholder="что запланировал?" required>
+            <input type="date" name="plan_date" required>
+            <button type="submit">добавить план</button>
+        </form>
     </div>
-    <a href="/delete_plan/{{ plan[0] }}" class="del-plan" onclick="return confirm('удалить план?')">✖ удалить</a>
+    {% for plan in plans %}
+    <div class="plan">
+        <div><h4>{{ plan[2] }}</h4><div class="plan-date">{{ plan[3] }}</div></div>
+        <a href="/delete_plan/{{ plan[0] }}" class="del-plan" onclick="return confirm('удалить?')">🗑️</a>
+    </div>
+    {% else %}
+    <div class="empty">планов пока нет</div>
+    {% endfor %}
 </div>
-{% else %}
-<div style="text-align:center; color:#6a7290; padding:30px;">планов пока нет</div>
-{% endfor %}
 </body>
 </html>
