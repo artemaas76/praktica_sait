@@ -11,7 +11,7 @@ app.secret_key = 'secretkey123'
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-DATABASE_URL = "ВСТАВЬ_СЮДА_НОВУЮ_СТРОКУ"
+DATABASE_URL = DATABASE_URL = "postgresql://diary_user:TFE9Usp9JX2B6uTlzo9U4d9EPGvsxEmr@dpg-d82p47mgvqtc73fv49e0-a/diary_db_7bp6""
 
 def get_db():
     return psycopg2.connect(DATABASE_URL)
