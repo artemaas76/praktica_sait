@@ -190,11 +190,21 @@ def add_task():
 
 @app.route('/toggle_task/<int:id>')
 def toggle_task(id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
     user_id = session['user_id']
     conn = get_db()
     c = conn.cursor()
-    c.execute("UPDATE tasks SET done = NOT done WHERE id=%s AND user_id=%s", (id, user_id))
-    conn.commit()
+    
+    c.execute("SELECT done FROM tasks WHERE id=%s AND user_id=%s", (id, user_id))
+    task = c.fetchone()
+    
+    if task:
+        new_done = not task[0]
+        c.execute("UPDATE tasks SET done=%s WHERE id=%s AND user_id=%s", (new_done, id, user_id))
+        conn.commit()
+    
     conn.close()
     return redirect(url_for('tasks'))
 
@@ -303,12 +313,17 @@ def add_memory():
     title = request.form['title']
     content = request.form['content']
     user_id = session['user_id']
+    
     image = None
-    if 'image' in request.files and request.files['image'].filename:
+    if 'image' in request.files:
         file = request.files['image']
-        filename = secure_filename(f"{datetime.now().timestamp()}_{file.filename}")
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        image = filename
+        if file and file.filename:
+            if not os.path.exists(app.config['UPLOAD_FOLDER']):
+                os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+            filename = secure_filename(f"{datetime.now().timestamp()}_{file.filename}")
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            image = filename
+    
     conn = get_db()
     c = conn.cursor()
     c.execute("INSERT INTO memories (user_id, title, content, image, created_at) VALUES (%s, %s, %s, %s, %s)",
