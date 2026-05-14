@@ -46,9 +46,11 @@
     <div class="goal-stats">
         <span>накоплено: {{ "%.2f"|format(goal[4]) }} ₽</span>
         <span>нужно: {{ "%.2f"|format(goal[3]) }} ₽</span>
-        <span>{{ "%.0f"|format((goal[4]/goal[3]*100) if goal[3] > 0 else 0) }}%</span>
+        <span>{{ "%.0f"|format((goal[4]/goal[3]*100) if goal[3] > 0 and (goal[4]/goal[3]*100) <= 100 else 100) }}%</span>
     </div>
-    <div class="progress-bar"><div class="progress-fill" style="width: {{ (goal[4]/goal[3]*100) if goal[3] > 0 else 0 }}%"></div></div>
+    <div class="progress-bar">
+        <div class="progress-fill" style="width: {{ (goal[4]/goal[3]*100) if goal[3] > 0 and (goal[4]/goal[3]*100) <= 100 else 100 }}%"></div>
+    </div>
     <form method="POST" action="/add_to_goal/{{ goal[0] }}" class="add-form">
         <input type="number" name="amount" placeholder="сколько добавить?" step="0.01" required>
         <button type="submit">пополнить</button>
