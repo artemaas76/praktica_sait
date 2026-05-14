@@ -2,62 +2,63 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>мои накопления</title>
+    <meta name=viewport content="width=device-width, initial-scale=1.0">
+    <title>копилка</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #1a1e2c; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #ddd; padding: 20px; }
-        .top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2d3246; padding-bottom: 12px; margin-bottom: 25px; }
-        .back { background: #2d3246; padding: 6px 14px; border-radius: 20px; text-decoration: none; color: #eee; font-size: 13px; }
-        .form-card { background: #0f121f; border: 1px solid #2a2f45; border-radius: 18px; padding: 20px; margin-bottom: 25px; }
-        input { width: 100%; background: #11151f; border: 1px solid #2d3246; border-radius: 30px; padding: 10px 15px; margin-bottom: 12px; color: #ddd; }
-        button { background: #2d3246; border: none; padding: 8px 20px; border-radius: 30px; color: white; width: 100%; cursor: pointer; }
-        .goal { background: #0f121f; border: 1px solid #2a2f45; border-radius: 16px; padding: 16px; margin-bottom: 16px; }
-        .goal-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
-        .goal-title { font-weight: 600; }
-        .progress-bar { background: #2d3246; border-radius: 20px; height: 10px; margin: 12px 0; }
-        .progress-fill { background: #4f6bff; height: 10px; border-radius: 20px; width: 0%; }
-        .goal-stats { font-size: 12px; color: #6a7290; margin-bottom: 12px; display: flex; justify-content: space-between; }
-        .add-form { display: flex; gap: 8px; margin-top: 12px; }
+        body { background: #0f172a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #e2e8f0; padding: 2rem 1.5rem; }
+        .top { max-width: 700px; margin: 0 auto 2rem auto; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 1rem; }
+        .back { background: #1e293b; border: 1px solid #334155; padding: 0.4rem 1.2rem; border-radius: 2rem; text-decoration: none; color: #e2e8f0; font-size: 0.8rem; }
+        .container { max-width: 700px; margin: 0 auto; }
+        .form-card { background: #1e293b; border: 1px solid #334155; border-radius: 1rem; padding: 1rem; margin-bottom: 1.5rem; }
+        input { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 2rem; padding: 0.6rem 1rem; margin-bottom: 0.5rem; color: #e2e8f0; }
+        button { background: #334155; border: none; padding: 0.5rem 1.2rem; border-radius: 2rem; color: white; cursor: pointer; width: 100%; }
+        .goal { background: #1e293b; border: 1px solid #334155; border-radius: 1rem; padding: 1rem; margin-bottom: 1rem; }
+        .goal-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+        .goal-title { font-weight: 500; }
+        .progress-bar { background: #334155; border-radius: 1rem; height: 0.5rem; margin: 0.5rem 0; }
+        .progress-fill { background: #3b82f6; height: 0.5rem; border-radius: 1rem; width: 0%; }
+        .goal-stats { font-size: 0.7rem; color: #94a3b8; margin-bottom: 0.5rem; display: flex; justify-content: space-between; }
+        .add-form { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
         .add-form input { flex: 1; margin-bottom: 0; }
-        .add-form button { width: auto; padding: 8px 16px; }
-        .del-goal { float: right; color: #c97a7a; text-decoration: none; font-size: 12px; }
+        .add-form button { width: auto; padding: 0.4rem 1rem; }
+        .del-goal { color: #f87171; text-decoration: none; font-size: 0.7rem; }
+        .empty { text-align: center; color: #94a3b8; padding: 2rem; }
     </style>
 </head>
 <body>
 <div class="top">
-    <div style="font-size: 20px;">мои накопления</div>
-    <a href="/" class="back">на главную</a>
+    <div style="font-size: 1.2rem;">💰 копилка</div>
+    <a href="/" class="back">← назад</a>
 </div>
-
-<div class="form-card">
-    <form method="POST" action="/add_goal">
-        <input type="text" name="title" placeholder="на что копим?" required>
-        <input type="number" name="target_amount" placeholder="сколько нужно" step="0.01" required>
-        <button type="submit">поставить цель</button>
-    </form>
+<div class="container">
+    <div class="form-card">
+        <form method="POST" action="/add_goal">
+            <input type="text" name="title" placeholder="на что копим?" required>
+            <input type="number" name="target_amount" placeholder="сколько нужно" step="0.01" required>
+            <button type="submit">поставить цель</button>
+        </form>
+    </div>
+    {% for goal in goals %}
+    <div class="goal">
+        <div class="goal-header">
+            <span class="goal-title">{{ goal[2] }}</span>
+            <a href="/delete_goal/{{ goal[0] }}" class="del-goal" onclick="return confirm('удалить?')">✖ удалить</a>
+        </div>
+        <div class="goal-stats">
+            <span>накоплено: {{ "%.2f"|format(goal[4]) }} ₽</span>
+            <span>нужно: {{ "%.2f"|format(goal[3]) }} ₽</span>
+            <span>{{ "%.0f"|format((goal[4]/goal[3]*100) if goal[3] > 0 and (goal[4]/goal[3]*100) <= 100 else 100) }}%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width: {{ (goal[4]/goal[3]*100) if goal[3] > 0 and (goal[4]/goal[3]*100) <= 100 else 100 }}%"></div></div>
+        <form method="POST" action="/add_to_goal/{{ goal[0] }}" class="add-form">
+            <input type="number" name="amount" placeholder="сколько добавить?" step="0.01" required>
+            <button type="submit">пополнить</button>
+        </form>
+    </div>
+    {% else %}
+    <div class="empty">целей пока нет</div>
+    {% endfor %}
 </div>
-
-{% for goal in goals %}
-<div class="goal">
-    <a href="/delete_goal/{{ goal[0] }}" class="del-goal" onclick="return confirm('удалить цель?')">✖ удалить</a>
-    <div class="goal-header">
-        <span class="goal-title">{{ goal[2] }}</span>
-    </div>
-    <div class="goal-stats">
-        <span>накоплено: {{ "%.2f"|format(goal[4]) }} ₽</span>
-        <span>нужно: {{ "%.2f"|format(goal[3]) }} ₽</span>
-        <span>{{ "%.0f"|format((goal[4]/goal[3]*100) if goal[3] > 0 and (goal[4]/goal[3]*100) <= 100 else 100) }}%</span>
-    </div>
-    <div class="progress-bar">
-        <div class="progress-fill" style="width: {{ (goal[4]/goal[3]*100) if goal[3] > 0 and (goal[4]/goal[3]*100) <= 100 else 100 }}%"></div>
-    </div>
-    <form method="POST" action="/add_to_goal/{{ goal[0] }}" class="add-form">
-        <input type="number" name="amount" placeholder="сколько добавить?" step="0.01" required>
-        <button type="submit">пополнить</button>
-    </form>
-</div>
-{% else %}
-<div style="text-align:center; color:#6a7290; padding:30px;">целей пока нет</div>
-{% endfor %}
 </body>
 </html>
