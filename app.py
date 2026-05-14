@@ -11,7 +11,7 @@ app.secret_key = 'secretkey123'
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-DATABASE_URL = "postgresql://diary_user:TFE9Usp9JX2B6uTlzo9U4d9EPGvsxEmr@dpg-d82p47mgvqtc73fv49e0-a/diary_db_7bp6"
+DATABASE_URL = "ВСТАВЬ_СЮДА_НОВУЮ_СТРОКУ"
 
 def get_db():
     return psycopg2.connect(DATABASE_URL)
@@ -200,8 +200,8 @@ def toggle_task(id):
     c.execute("SELECT done FROM tasks WHERE id=%s AND user_id=%s", (id, user_id))
     task = c.fetchone()
     
-    if task:
-        new_done = not task[0]
+    if task is not None:
+        new_done = 0 if task[0] == 1 else 1
         c.execute("UPDATE tasks SET done=%s WHERE id=%s AND user_id=%s", (new_done, id, user_id))
         conn.commit()
     
